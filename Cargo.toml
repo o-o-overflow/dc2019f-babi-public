@@ -1,0 +1,13 @@
+[package]
+name = "babi"
+version = "0.1.0"
+authors = ["slipper <slipper@0ops.net>"]
+edition = "2018"
+
+[dependencies]
+error-chain = "0.12.1"
+nix = "0.14.1"
+regex = "1"
+base64 = "0.10.1"
+libotp = "0.1.3"
+rand = "0.5"

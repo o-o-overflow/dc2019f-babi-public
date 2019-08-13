@@ -1,0 +1,60 @@
+# Info for the schoreboard
+
+# the service name must contain only lowercase letters, numbers, and dashes. It MUST be the same as the repo name, sans "dc2019f-"
+service_name: "babi"
+description: "BABI Authenticator: a trusted system in trusted language. You could only patch functions like babi::*"
+tags:
+  - pwn
+  - reverse
+violates_flag_format: false # if this is not "true", the flag is verfied against the flag format
+
+game_port: 47793
+
+# At some point we may start blocking all egress connections. Set this to True if your service needs them. DO NOT RELY ON THIS FOR BLOCKING THOUGH.
+allow_egress: False
+
+initial_flag: "OOO{this is a test flag}" # this is the flag of the service when it first launches. For jeopardy, this is "THE FLAG"
+flag_path: /flag # the location of the flag (for fresh flags). Leave blank for single-flag services (i.e., quals)
+
+# Type can be normal or king_of_the_hill
+type: normal
+
+# This is the number of concurrent connections that a container should be able to handle.
+# This will be tested by the test script
+concurrent_connections: 16
+
+authors:
+  - slipper
+
+# This is the timeout that your check scripts will be run as.
+check_timeout: 120
+
+#
+# Directories below the next two are absolute in either the `service` or `interaction` docker container.
+#
+
+# These are the files that will be "public" to the teams via the scoreboard.
+# The paths are relative to the repository!
+public_files:
+  - service/babi
+
+# These are the files that may be patched. They are relative to / in the challenge container!
+patchable_file: /babi
+
+# The maximum difference in bytes between the original binary and the patch, if not supplied assumed to be 200 bytes
+max_patchable_bytes: 200
+
+# Test scripts are heavily encouraged.
+# All scripts should exit 0 if nothing went wrong.
+# Scripts are automatically determined to be exploit scripts if they start with the word "exploit".
+# Exploit scripts must output the flag using "FLAG: <FLAG>" and exit with 0 if the flag was captured correctly. 
+# The paths are absolute in the `interaction` docker container.
+remote_interactions:
+  - /check.py
+  - /exploit.py
+
+# These local test scripts are run inside of a "local interaction" docker container that is derived from the service container.
+# They are for running more hardcore tests (i.e., static analysis, etc).
+# The paths are absolute in the `local-test` docker container.
+local_tests:
+  - /check.py
